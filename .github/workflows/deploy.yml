@@ -20,6 +20,13 @@ jobs:
           echo "$today"
           echo "::set-output name=today::$today"
 
+      - id: build_version
+        name: Get build version
+        run: |
+          version="$(grep '^ARG VERSION=' Dockerfile | sed -e 's/^ARG VERSION=//' | sort -rV | head -n1)"
+          echo "$version"
+          echo "::set-output name=version::$version"
+
       - id: buildx
         uses: docker/setup-buildx-action@v1
 
@@ -41,12 +48,12 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          build-args:
+          build-args: |
             REVISION=${{ github.sha }}
             BUILD_DATE=${{ steps.build_date.outputs.today }}
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: lilyinstarlight/ftclive:latest
+          tags: lilyinstarlight/ftclive:latest,lilyinstarlight/ftclive:${{ steps.build_version.outputs.version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

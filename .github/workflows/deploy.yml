@@ -23,7 +23,7 @@ jobs:
       - id: build_version
         name: Get build version
         run: |
-          version="$(grep '^ARG VERSION=' Dockerfile | sed -e 's/^ARG VERSION=//' | sort -rV | head -n1)"
+          version="$(grep '^ARG VERSION=' Dockerfile | sed -e 's/^ARG VERSION=//' | tail -n1)"
           echo "$version"
           echo "::set-output name=version::$version"
 

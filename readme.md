@@ -1,6 +1,6 @@
-# FIRST Tech Challenge Live Docker Image
+# _FIRST_ Tech Challenge Live Docker Image
 
-Docker image for [FIRST Tech Challenge Live](https://github.com/FIRST-Tech-Challenge/scorekeeper).
+Docker image for [_FIRST_ Tech Challenge Live](https://github.com/FIRST-Tech-Challenge/scorekeeper).
 
 ## Usage
 

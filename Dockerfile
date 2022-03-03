@@ -1,8 +1,8 @@
 FROM alpine:latest as build
 
-ARG VERSION=3.2.4
+ARG VERSION=3.3.7
 ARG REVISION=1
-ARG BUILD_DATE=2021-12-14
+ARG BUILD_DATE=2022-03-03
 
 RUN apk add curl libarchive-tools
 RUN \
@@ -12,9 +12,9 @@ RUN \
 
 FROM openjdk:17-slim
 
-ARG VERSION=3.2.4
+ARG VERSION=3.3.7
 ARG REVISION=1
-ARG BUILD_DATE=2021-12-14
+ARG BUILD_DATE=2022-03-03
 
 LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.created=$BUILD_DATE \

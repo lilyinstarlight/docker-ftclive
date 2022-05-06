@@ -7,8 +7,10 @@ ARG BUILD_DATE=2022-05-06
 RUN apk add curl libarchive-tools
 RUN \
   mkdir -p /src /app && \
-  curl -sSL https://github.com/FIRST-Tech-Challenge/scorekeeper/releases/download/v$VERSION/FIRST-Tech-Challenge-Live-v$VERSION.zip -o /src/FIRST-Tech-Challenge-Live-v$VERSION.zip && \
-  bsdtar -xf /src/FIRST-Tech-Challenge-Live-v$VERSION.zip -C /app --strip-components=1
+  (curl -sSfL https://github.com/FIRST-Tech-Challenge/scorekeeper/releases/download/v$VERSION/FIRST-Tech-Challenge-Live-v$VERSION.zip -o /src/FIRST-Tech-Challenge-Live-v$VERSION.zip && \
+  bsdtar -xf /src/FIRST-Tech-Challenge-Live-v$VERSION.zip -C /app --strip-components=1) || \
+  (curl -sSfL https://github.com/FIRST-Tech-Challenge/scorekeeper/releases/download/v$VERSION/FIRST-Tech-Challenge-Live-v${VERSION}_OFFSEASON.zip -o /src/FIRST-Tech-Challenge-Live-v${VERSION}_OFFSEASON.zip && \
+  bsdtar -xf /src/FIRST-Tech-Challenge-Live-v${VERSION}_OFFSEASON.zip -C /app --strip-components=1)
 
 FROM openjdk:17-slim
 

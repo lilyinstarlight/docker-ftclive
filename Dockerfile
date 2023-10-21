@@ -5,15 +5,17 @@ ARG REVISION=1
 ARG CHANNEL=PLKSUJGT
 ARG BUILD_DATE=2023-10-20
 
-RUN apk add curl libarchive-tools openjdk17-jre-headless eudev
+RUN apk add curl libarchive-tools openjdk17-jre-headless eudev xdg-user-dirs
 RUN \
   mkdir -p /src /app && \
   (curl -sSfL https://ftc-scoring.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
   bsdtar -xf /src/FTCLive-${VERSION}.zip -C /app --strip-components=1)
 
-RUN env XDG_DATA_HOME=/app/data XDG_STATE_HOME=/app/state /app/bin/FTCLauncher & while kill -0 %1 &>/dev/null && ! grep -Fq 'INFO  org.usfirst.ftc.server.Server - Server boot id:' /app/state/*/*.log &>/dev/null; do sleep 1; done && kill %1
+RUN env XDG_CONFIG_HOME=/app/config xdg-user-dirs-update --set DOCUMENTS /app/docs
 
-FROM openjdk:17-slim
+RUN env XDG_CONFIG_HOME=/app/config XDG_DATA_HOME=/app/data XDG_STATE_HOME=/app/state /app/bin/FTCLauncher & while kill -0 %1 &>/dev/null && ! grep -Fq 'INFO  org.usfirst.ftc.server.Server - Server boot id:' /app/state/*/*.log &>/dev/null; do sleep 1; done && kill %1
+
+FROM alpine:latest
 
 ARG VERSION=5.0.8
 ARG REVISION=1
@@ -32,10 +34,12 @@ LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.title="FIRST Tech Challenge Live" \
   org.opencontainers.image.description="FIRST Tech Challenge Live Scorekeeper Software"
 
+RUN apk add openjdk17-jre-headless eudev xdg-user-dirs
+
 COPY --from=build /app /app
 
 EXPOSE 80
 
 WORKDIR /app/bin
 
-CMD [ "/usr/bin/env", "XDG_DATA_HOME=/app/data", "XDG_STATE_HOME=/app/state", "/app/bin/FTCLauncher" ]
+CMD [ "/usr/bin/env", "XDG_CONFIG_HOME=/app/config", "XDG_DATA_HOME=/app/data", "XDG_STATE_HOME=/app/state", "/app/bin/FTCLauncher" ]

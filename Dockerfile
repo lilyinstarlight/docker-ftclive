@@ -15,6 +15,8 @@ RUN env XDG_CONFIG_HOME=/app/config xdg-user-dirs-update --set DOCUMENTS /app/do
 
 RUN env XDG_CONFIG_HOME=/app/config XDG_DATA_HOME=/app/data XDG_STATE_HOME=/app/state /app/bin/FTCLauncher & while kill -0 %1 &>/dev/null && ! grep -Fq 'INFO  org.usfirst.ftc.server.Server - Server boot id:' /app/state/*/*.log &>/dev/null; do sleep 1; done && kill %1
 
+RUN test -e /app/data/ftclive-2024-default/lib/FTCLocal-v${VERSION}.jar || (echo 'ERROR: Version does not match latest for this channel. Please update the Dockerfile.' && exit 1)
+
 FROM alpine:latest
 
 ARG VERSION=5.0.9

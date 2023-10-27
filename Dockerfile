@@ -1,9 +1,9 @@
 FROM alpine:latest as build
 
-ARG VERSION=5.0.8
+ARG VERSION=5.0.9
 ARG REVISION=1
 ARG CHANNEL=PLKSUJGT
-ARG BUILD_DATE=2023-10-20
+ARG BUILD_DATE=2023-10-27
 
 RUN apk add curl libarchive-tools openjdk17-jre-headless eudev xdg-user-dirs
 RUN \
@@ -17,9 +17,9 @@ RUN env XDG_CONFIG_HOME=/app/config XDG_DATA_HOME=/app/data XDG_STATE_HOME=/app/
 
 FROM alpine:latest
 
-ARG VERSION=5.0.8
+ARG VERSION=5.0.9
 ARG REVISION=1
-ARG BUILD_DATE=2023-10-20
+ARG BUILD_DATE=2023-10-27
 
 LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.created=$BUILD_DATE \

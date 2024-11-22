@@ -1,11 +1,11 @@
 FROM alpine:latest as build
 
-ARG VERSION=6.2.1
+ARG VERSION=6.2.2
 ARG REVISION=1
-ARG CHANNEL=
-ARG BUILD_DATE=2024-11-15
+ARG CHANNEL=GQLTEUGH
+ARG BUILD_DATE=2024-11-22
 
-RUN apk add curl libarchive-tools openjdk17-jre-headless eudev xdg-user-dirs
+RUN apk add curl libarchive-tools openjdk21-jre-headless eudev xdg-user-dirs
 RUN \
   mkdir -p /src /app && \
   (curl -sSfL https://ftc-scoring.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
@@ -15,13 +15,13 @@ RUN env XDG_CONFIG_HOME=/app/config xdg-user-dirs-update --set DOCUMENTS /app/do
 
 RUN env XDG_CONFIG_HOME=/app/config XDG_DATA_HOME=/app/data XDG_STATE_HOME=/app/state /app/bin/FTCLauncher & while kill -0 %1 &>/dev/null && ! grep -Fq 'INFO  org.usfirst.ftc.server.Server - Server boot id:' /app/state/*/*.log &>/dev/null; do sleep 1; done && kill %1
 
-RUN test -e /app/data/ftclive-2024-default/lib/FTCLocal-v${VERSION}.jar || (echo 'ERROR: Version does not match latest for this channel. Please update the Dockerfile.' && exit 1)
+RUN test -e /app/data/ftclive-*-default/lib/FTCLocal-v${VERSION}.jar || (echo 'ERROR: Version does not match latest for this channel. Please update the Dockerfile.' && exit 1)
 
 FROM alpine:latest
 
-ARG VERSION=6.2.1
+ARG VERSION=6.2.2
 ARG REVISION=1
-ARG BUILD_DATE=2024-11-15
+ARG BUILD_DATE=2024-11-22
 
 LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.created=$BUILD_DATE \
@@ -36,7 +36,7 @@ LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.title="FIRST Tech Challenge Live" \
   org.opencontainers.image.description="FIRST Tech Challenge Live Scorekeeper Software"
 
-RUN apk add openjdk17-jre-headless eudev xdg-user-dirs
+RUN apk add openjdk21-jre-headless eudev xdg-user-dirs
 
 COPY --from=build /app /app
 

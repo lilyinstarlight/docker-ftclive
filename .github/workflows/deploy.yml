@@ -1,14 +1,15 @@
 name: Deploy
 
 on:
+  pull_request:
   push:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
-  dockerhub:
-    name: Docker Hub
+  container:
+    name: Container
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -52,7 +53,7 @@ jobs:
             REVISION=${{ github.sha }}
             BUILD_DATE=${{ steps.build_date.outputs.today }}
           builder: ${{ steps.buildx.outputs.name }}
-          push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: lilyinstarlight/ftclive:latest,lilyinstarlight/ftclive:${{ steps.build_version.outputs.version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache

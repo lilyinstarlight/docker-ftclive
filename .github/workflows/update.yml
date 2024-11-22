@@ -9,6 +9,10 @@ jobs:
   check:
     name: Check
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
     env:
       GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
@@ -19,7 +23,7 @@ jobs:
       - name: Configure git
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Check for updates
         run: |
@@ -36,10 +40,15 @@ jobs:
             sed -i -e 's/^ARG BUILD_DATE=[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}$/ARG BUILD_DATE='"$today"'/' Dockerfile
           fi
 
-      - name: Push changes
-        run: |
-          if ! git diff --exit-code --quiet Dockerfile; then
-            git commit -m "update FTCLive release" Dockerfile
-            git pull --rebase
-            git push
-          fi
+      - id: create-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update_ftclive_action
+          delete-branch: true
+          committer: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+          author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+          commit-message: 'container: update FTCLive release'
+          title: 'container: update FTCLive release'
+          labels: 'dependencies'
+          body: |
+            Automated bump of FTCLive release

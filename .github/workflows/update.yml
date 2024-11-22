@@ -24,7 +24,7 @@ jobs:
       - name: Check for updates
         run: |
           latest_version="$(gh release view -R FIRST-Tech-Challenge/scorekeeper --json tagName --jq '.tagName[1:]')"
-          latest_channel="$(curl -sSfL "$(gh release view -R FIRST-Tech-Challenge/scorekeeper --json body --jq '(.body | match("(https://[^ >\n]*)")).captures[0].string')" | grep -F window.channelToken | sed -e 's/^.*window.channelToken = "\([^"]*\)".*$/\1/')"
+          latest_channel="$(curl -sSfL "$(gh release view -R FIRST-Tech-Challenge/scorekeeper --json body --jq '(.body | match("(https://[^ >\n]*)")).captures[0].string')" | grep -F window.channelToken | sed -e 's/^.*window\.channelToken = "\([^"]*\)".*$/\1/')"
           current_version="$(grep -o '^ARG VERSION=[0-9]\+\.[0-9]\+\.[0-9]\+$' Dockerfile | head -n1 | sed -e 's/^ARG VERSION=//')"
           today="$(date +'%Y-%m-%d')"
 

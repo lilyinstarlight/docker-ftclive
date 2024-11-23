@@ -19,14 +19,14 @@ jobs:
         run: |
           today="$(date +'%Y-%m-%d')"
           echo "$today"
-          echo "::set-output name=today::$today"
+          echo "today=$today" >> "$GITHUB_OUTPUT"
 
       - id: build_version
         name: Get build version
         run: |
           version="$(grep '^ARG VERSION=' Dockerfile | sed -e 's/^ARG VERSION=//' | tail -n1)"
           echo "$version"
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - id: buildx
         uses: docker/setup-buildx-action@v3

@@ -1,4 +1,4 @@
-FROM alpine:latest as build
+FROM alpine:latest AS build
 
 ARG VERSION=6.2.2
 ARG REVISION=1

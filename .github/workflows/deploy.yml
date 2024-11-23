@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}

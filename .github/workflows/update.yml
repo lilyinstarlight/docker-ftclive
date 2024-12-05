@@ -13,19 +13,12 @@ jobs:
       actions: write
       contents: write
       pull-requests: write
-    env:
-      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
       - uses: actions/checkout@v4
-        with:
-          ssh-key: ${{ secrets.REPO_KEY }}
-
-      - name: Configure git
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Check for updates
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         run: |
           latest_version="$(gh release view -R FIRST-Tech-Challenge/scorekeeper --json tagName --jq '.tagName[1:]')"
           latest_channel="$(curl -sSfL "$(gh release view -R FIRST-Tech-Challenge/scorekeeper --json body --jq '(.body | match("(https://[^ >\n]*)")).captures[0].string')" | grep -F window.channelToken | sed -e 's/^.*window\.channelToken = "\([^"]*\)".*$/\1/')"
@@ -52,3 +45,9 @@ jobs:
           labels: 'dependencies'
           body: |
             Automated bump of FTCLive release
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.create-pr.outputs.pull-request-operation) }}
+        with:
+          workflow: deploy.yml
+          ref: refs/heads/update_ftclive_action

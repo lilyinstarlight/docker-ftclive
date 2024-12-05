@@ -1,11 +1,11 @@
-# _FIRST_ Tech Challenge Live Docker Image
+# _FIRST_ Tech Challenge Live Container Image
 
-Docker image for [_FIRST_ Tech Challenge Live](https://github.com/FIRST-Tech-Challenge/scorekeeper).
+Container image for [_FIRST_ Tech Challenge Live](https://github.com/FIRST-Tech-Challenge/scorekeeper).
 
 ## Usage
 
-Run the docker image with exposed port:
+Run the container image (with either `podman` or `docker`) with exposed port:
 
 ```sh
-$ docker run -p 80:80 lilyinstarlight/ftclive
+$ docker run -p 80:80 docker.io/lilyinstarlight/ftclive
 ```

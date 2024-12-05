@@ -59,5 +59,12 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - uses: peter-evans/dockerhub-description@v4
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          repository: lilyinstarlight/ftclive
+
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

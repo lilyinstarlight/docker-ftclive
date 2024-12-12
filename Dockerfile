@@ -1,11 +1,11 @@
 FROM alpine:latest AS build
 
-ARG VERSION=6.3.1
+ARG VERSION=6.3.2
 ARG REVISION=1
 ARG CHANNEL=GQLTEUGH
-ARG BUILD_DATE=2024-12-05
+ARG BUILD_DATE=2024-12-12
 
-RUN apk add curl libarchive-tools openjdk21-jre-headless eudev xdg-user-dirs
+RUN apk add curl libarchive-tools openjdk21-jre-headless eudev eudev-libs xdg-user-dirs
 RUN \
   mkdir -p /src /app && \
   (curl -sSfL https://ftc-scoring.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
@@ -19,9 +19,9 @@ RUN test -e /app/data/ftclive-*-default/lib/FTCLocal-v${VERSION}.jar || (echo 'E
 
 FROM alpine:latest
 
-ARG VERSION=6.3.1
+ARG VERSION=6.3.2
 ARG REVISION=1
-ARG BUILD_DATE=2024-12-05
+ARG BUILD_DATE=2024-12-12
 
 LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.created=$BUILD_DATE \
@@ -36,7 +36,7 @@ LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.title="FIRST Tech Challenge Live" \
   org.opencontainers.image.description="FIRST Tech Challenge Live Scorekeeper Software"
 
-RUN apk add openjdk21-jre-headless eudev xdg-user-dirs
+RUN apk add openjdk21-jre-headless eudev eudev-libs xdg-user-dirs
 
 COPY --from=build /app /app
 

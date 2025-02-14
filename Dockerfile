@@ -1,6 +1,6 @@
 FROM alpine:latest AS build
 
-ARG VERSION=6.6.0
+ARG VERSION=6.6.1
 ARG REVISION=1
 ARG CHANNEL=GQLTEUGH
 ARG BUILD_DATE=2025-02-14
@@ -19,7 +19,7 @@ RUN test -e /app/data/ftclive-*-default/lib/FTCLocal-v${VERSION}.jar || (echo 'E
 
 FROM alpine:latest
 
-ARG VERSION=6.6.0
+ARG VERSION=6.6.1
 ARG REVISION=1
 ARG BUILD_DATE=2025-02-14
 

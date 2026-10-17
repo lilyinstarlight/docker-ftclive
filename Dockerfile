@@ -36,7 +36,7 @@ LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.title="FIRST Tech Challenge Live" \
   org.opencontainers.image.description="FIRST Tech Challenge Live Scorekeeper Software"
 
-RUN apk add --no-cache openjdk21-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
+RUN apk add --no-cache openjdk25-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
 
 COPY --from=build /app /app
 

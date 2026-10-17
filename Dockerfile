@@ -8,7 +8,7 @@ ARG BUILD_DATE=2026-05-19
 RUN apk add --no-cache curl libarchive-tools openjdk21-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
 RUN \
   mkdir -p /src /app && \
-  (curl -sSfL https://ftc-scoring.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
+  (curl -sSfL https://event-portal.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
   bsdtar -xf /src/FTCLive-${VERSION}.zip -C /app --strip-components=1)
 
 RUN env XDG_CONFIG_HOME=/app/config xdg-user-dirs-update --set DOCUMENTS /app/docs

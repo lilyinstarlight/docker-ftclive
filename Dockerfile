@@ -1,9 +1,9 @@
 FROM alpine:latest AS build
 
-ARG VERSION=7.5.0
+ARG VERSION=8.0.0
 ARG REVISION=1
-ARG CHANNEL=ZMEDMYSB
-ARG BUILD_DATE=2026-05-19
+ARG CHANNEL=ZKTNDCMV
+ARG BUILD_DATE=2026-10-17
 
 RUN apk add --no-cache curl libarchive-tools openjdk25-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
 RUN \
@@ -19,9 +19,9 @@ RUN test -e /app/data/ftclive-*-default/lib/FTCLocal-v${VERSION}.jar || (echo 'E
 
 FROM alpine:latest
 
-ARG VERSION=7.5.0
+ARG VERSION=8.0.0
 ARG REVISION=1
-ARG BUILD_DATE=2026-05-19
+ARG BUILD_DATE=2026-10-17
 
 LABEL maintainer="Lily Foster <lily@lily.flowers>" \
   org.opencontainers.image.created=$BUILD_DATE \

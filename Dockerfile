@@ -5,7 +5,7 @@ ARG REVISION=1
 ARG CHANNEL=ZMEDMYSB
 ARG BUILD_DATE=2026-05-19
 
-RUN apk add --no-cache curl libarchive-tools openjdk21-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
+RUN apk add --no-cache curl libarchive-tools openjdk25-jre-headless eudev eudev-libs gcompat libstdc++ xdg-user-dirs
 RUN \
   mkdir -p /src /app && \
   (curl -sSfL https://event-portal.firstinspires.org/local/download/${CHANNEL}/all_platforms -o /src/FTCLive-${VERSION}.zip && \
